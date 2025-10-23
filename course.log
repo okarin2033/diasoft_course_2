@@ -1,0 +1,7 @@
+1761223533848:help
+1761223545745:book create
+1761223589089:book create --title test --authorId 1 --genreId 1
+1761223598765:book list
+1761223623587:ref authors
+1761223628600:ref genres
+1761224104101:help
