@@ -57,7 +57,7 @@ public class BookCommands {
     }
 
     private String fmt(Book b) {
-        return b.getId() + ": " + b.getTitle() + " (authorId=" + b.getAuthorId() + ", genreId=" + b.getGenreId() + ")";
+        return b.getId() + ": " + b.getTitle() + " (authorId=" + b.getAuthor().getId() + ", genreId=" + b.getGenre().getId() + ")";
     }
 }
 

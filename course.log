@@ -5,3 +5,17 @@
 1761223623587:ref authors
 1761223628600:ref genres
 1761224104101:help
+1761301643520:book create
+1761302215819:help
+1761302237081:comment list
+1761302245578:comment list --bookid=1
+1761302256604:comment list --bookid 1
+1761302266597:comment list --bookId 1
+1761303753653:book list
+1761565850930:help
+1761565856368:book list
+1761565870634:book create
+1761565870641:d
+1761565874784:book create
+1761565889672:book create --genreId 1 --authorId 1 --title test book
+1761565894487:book list
