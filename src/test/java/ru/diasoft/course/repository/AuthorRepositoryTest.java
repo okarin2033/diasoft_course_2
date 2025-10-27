@@ -3,16 +3,14 @@ package ru.diasoft.course.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 import ru.diasoft.course.domain.Author;
-import ru.diasoft.course.repository.jpa.AuthorRepositoryJpa;
+ 
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Import(AuthorRepositoryJpa.class)
 class AuthorRepositoryTest {
 
     @Autowired

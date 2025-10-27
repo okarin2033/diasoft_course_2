@@ -7,6 +7,7 @@ import ru.diasoft.course.domain.Book;
 import ru.diasoft.course.domain.Genre;
 import ru.diasoft.course.repository.AuthorRepository;
 import ru.diasoft.course.repository.BookRepository;
+import ru.diasoft.course.repository.BookCommentRepository;
 import ru.diasoft.course.repository.GenreRepository;
 
 import java.util.List;
@@ -17,11 +18,13 @@ public class BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
+    private final BookCommentRepository bookCommentRepository;
 
-    public BookService(BookRepository bookRepository, AuthorRepository authorRepository, GenreRepository genreRepository) {
+    public BookService(BookRepository bookRepository, AuthorRepository authorRepository, GenreRepository genreRepository, BookCommentRepository bookCommentRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
         this.genreRepository = genreRepository;
+        this.bookCommentRepository = bookCommentRepository;
     }
 
     public List<Book> list() {

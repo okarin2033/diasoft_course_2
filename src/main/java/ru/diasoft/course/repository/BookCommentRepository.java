@@ -1,15 +1,13 @@
 package ru.diasoft.course.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.diasoft.course.domain.BookComment;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface BookCommentRepository {
+public interface BookCommentRepository extends JpaRepository<BookComment, Long> {
     List<BookComment> findByBookId(Long bookId);
-    Optional<BookComment> findById(Long id);
-    BookComment save(BookComment comment);
-    void deleteById(Long id);
+    long deleteByBookId(Long bookId);
 }
 
 
