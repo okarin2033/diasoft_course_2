@@ -2,32 +2,37 @@ package ru.diasoft.course.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.diasoft.course.dao.AuthorDao;
-import ru.diasoft.course.dao.BookDao;
-import ru.diasoft.course.dao.GenreDao;
+import ru.diasoft.course.domain.Author;
 import ru.diasoft.course.domain.Book;
+import ru.diasoft.course.domain.Genre;
+import ru.diasoft.course.repository.AuthorRepository;
+import ru.diasoft.course.repository.BookRepository;
+import ru.diasoft.course.repository.BookCommentRepository;
+import ru.diasoft.course.repository.GenreRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
 public class BookService {
-    private final BookDao bookDao;
-    private final AuthorDao authorDao;
-    private final GenreDao genreDao;
+    private final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
+    private final GenreRepository genreRepository;
+    private final BookCommentRepository bookCommentRepository;
 
-    public BookService(BookDao bookDao, AuthorDao authorDao, GenreDao genreDao) {
-        this.bookDao = bookDao;
-        this.authorDao = authorDao;
-        this.genreDao = genreDao;
+    public BookService(BookRepository bookRepository, AuthorRepository authorRepository, GenreRepository genreRepository, BookCommentRepository bookCommentRepository) {
+        this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
+        this.genreRepository = genreRepository;
+        this.bookCommentRepository = bookCommentRepository;
     }
 
     public List<Book> list() {
-        return bookDao.findAll();
+        return bookRepository.findAll();
     }
 
     public Book get(Long id) {
-        return bookDao.findById(id).orElseThrow(NoSuchElementException::new);
+        return bookRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     @Transactional
@@ -35,9 +40,9 @@ public class BookService {
         if (title == null || title.isBlank()) {
             throw new IllegalArgumentException("title is blank");
         }
-        authorDao.findById(authorId).orElseThrow(NoSuchElementException::new);
-        genreDao.findById(genreId).orElseThrow(NoSuchElementException::new);
-        return bookDao.insert(new Book(null, title, authorId, genreId));
+        Author author = authorRepository.findById(authorId).orElseThrow(NoSuchElementException::new);
+        Genre genre = genreRepository.findById(genreId).orElseThrow(NoSuchElementException::new);
+        return bookRepository.save(new Book(null, title, author, genre));
     }
 
     @Transactional
@@ -47,26 +52,19 @@ public class BookService {
             existing.setTitle(title);
         }
         if (authorId != null) {
-            authorDao.findById(authorId).orElseThrow(NoSuchElementException::new);
-            existing.setAuthorId(authorId);
+            Author author = authorRepository.findById(authorId).orElseThrow(NoSuchElementException::new);
+            existing.setAuthor(author);
         }
         if (genreId != null) {
-            genreDao.findById(genreId).orElseThrow(NoSuchElementException::new);
-            existing.setGenreId(genreId);
+            Genre genre = genreRepository.findById(genreId).orElseThrow(NoSuchElementException::new);
+            existing.setGenre(genre);
         }
-        boolean ok = bookDao.update(existing);
-        if (!ok) {
-            throw new NoSuchElementException();
-        }
-        return existing;
+        return bookRepository.save(existing);
     }
 
     @Transactional
     public void delete(Long id) {
-        boolean ok = bookDao.deleteById(id);
-        if (!ok) {
-            throw new NoSuchElementException();
-        }
+        bookRepository.deleteById(id);
     }
 }
 
