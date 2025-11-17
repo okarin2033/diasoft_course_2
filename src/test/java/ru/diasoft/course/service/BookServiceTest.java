@@ -6,11 +6,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.jdbc.Sql;
 import ru.diasoft.course.domain.Book;
+import ru.diasoft.course.impl.BookServiceImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JdbcTest
-@ComponentScan(basePackages = {"ru.diasoft.course.dao.jdbc", "ru.diasoft.course.service"})
+@ComponentScan(basePackages = {"ru.diasoft.course.dao.jdbc", "ru.diasoft.course.service", "ru.diasoft.course.impl"})
 class BookServiceTest {
 
     @Autowired

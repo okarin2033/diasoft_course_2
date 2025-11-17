@@ -1,5 +1,6 @@
 package ru.diasoft.course.shell;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -10,11 +11,8 @@ import java.util.stream.Collectors;
 
 @ShellComponent
 public class BookCommands {
-    private final BookService bookService;
-
-    public BookCommands(BookService bookService) {
-        this.bookService = bookService;
-    }
+    @Autowired
+    private BookService bookService;
 
     @ShellMethod(key = "book list", value = "List books")
     public String list() {
