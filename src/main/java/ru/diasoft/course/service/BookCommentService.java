@@ -20,8 +20,10 @@ public class BookCommentService {
         this.bookRepository = bookRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<BookComment> findByBook(Long bookId) {
-        return bookCommentRepository.findByBookId(bookId);
+        Book book = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        return List.copyOf(book.getComments());
     }
 
     public BookComment get(Long id) {

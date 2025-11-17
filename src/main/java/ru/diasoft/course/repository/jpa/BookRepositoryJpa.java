@@ -25,11 +25,7 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     public Optional<Book> findById(Long id) {
-        List<Book> list = em.createQuery(
-                "select b from Book b left join fetch b.author left join fetch b.genre where b.id = :id",
-                Book.class
-        ).setParameter("id", id).getResultList();
-        return list.stream().findFirst();
+        return Optional.ofNullable(em.find(Book.class, id));
     }
 
     @Override
@@ -46,5 +42,6 @@ public class BookRepositoryJpa implements BookRepository {
         findById(id).ifPresent(b -> em.remove(em.contains(b) ? b : em.merge(b)));
     }
 }
+
 
 

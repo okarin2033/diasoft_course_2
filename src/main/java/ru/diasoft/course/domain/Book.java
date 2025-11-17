@@ -1,6 +1,8 @@
 package ru.diasoft.course.domain;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NamedEntityGraph(
         name = "book.withAuthorAndGenre",
@@ -17,13 +19,16 @@ public class Book {
     private Long id;
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "genre_id", nullable = false)
     private Genre genre;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BookComment> comments = new ArrayList<>();
 
     public Book() {
     }
@@ -66,6 +71,15 @@ public class Book {
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
+
+    public List<BookComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<BookComment> comments) {
+        this.comments = comments;
+    }
 }
+
 
 
